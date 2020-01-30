@@ -1,12 +1,18 @@
 {
   "name": "ractive-rematch",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "esm/index.js",
   "repository": "https://github.com/Obooman/ractive-rematch.git",
   "author": "Oboo Chin <oboochin@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "@rematch/core": "^1.3.0",
     "ractive": "^1.3.8"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^3.0.0",
+    "rollup-plugin-terser": "^5.2.0",
+    "tslib": "^1.10.0",
+    "typescript": "^3.7.5"
   }
 }
