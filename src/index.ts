@@ -15,21 +15,23 @@ const freezeObjectField: FreezeObjectFunc = (obj, property) => {
 };
 
 export const connectInstance: ConnectInstanceFunc = (
-  mapStateToData,
+  mapStateToData = () => ({}),
   mapDispatchToMethods
 ) => ractiveInstance => {
   const initialState = mapStateToData(store.getState());
+
   ractiveInstance.set(initialState);
 
   ractiveInstance["dispatch"] = store.dispatch;
-
   freezeObjectField(ractiveInstance, "dispatch");
 
-  const methods = mapDispatchToMethods(store.dispatch);
+  if (mapDispatchToMethods && typeof mapDispatchToMethods === "function") {
+    const methods = mapDispatchToMethods(store.dispatch);
 
-  Object.keys(methods).forEach(method => {
-    ractiveInstance[method] = methods[method];
-  });
+    Object.keys(methods).forEach(method => {
+      ractiveInstance[method] = methods[method];
+    });
+  }
 
   store.subscribe(function() {
     const data = mapStateToData(store.getState());
@@ -39,7 +41,7 @@ export const connectInstance: ConnectInstanceFunc = (
 };
 
 export const connet: ConnectFunc = (
-  mapStateToData,
+  mapStateToData = () => ({}),
   mapDispatchToMethods
 ) => ractiveClass => args => {
   const newInstance = new ractiveClass(args);
@@ -48,8 +50,5 @@ export const connet: ConnectFunc = (
 };
 
 export const bindStore: BindStoreFunc = reduxStore => {
-  if (store) {
-    throw new Error("Store has been binded");
-  }
   store = reduxStore;
 };

@@ -41,8 +41,7 @@ const mapDispatchToMethod = dispatch => ({
 
 /* 
  * Connect state to a subclass instead of instance please use `connect`
- * by passing second param bind the dispatch function to instance. 
- * (even passing an `null` object)
+ * the dispatch function will be attached to the instance. 
  * Use this.dispath as you like it
  */
 connectInstance(mapStateToData,mapDispatchToMethod)(component)
