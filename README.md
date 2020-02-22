@@ -1,7 +1,6 @@
 # ractive-rematch
 redux connector for ractivejs application, with rematch as redux api provider.
 
-
 # Get Started
 
 ## Install dependencies
@@ -20,11 +19,17 @@ bindStore(init({models}));
 
 const applicationContainerDOMElement = document.querySelector("#root");
 
-const component = new Ractive({
+const instance = new Ractive({
   el:applicationContainerDOMElement,
   template:`<span>{variable}</span>`,
   data:{
     variable:12
+  }
+})
+
+const Component = Ractive.extend({
+  data:{
+    variable:13
   }
 })
 
@@ -40,9 +45,10 @@ const mapDispatchToMethod = dispatch => ({
 })
 
 /* 
- * Connect state to a subclass instead of instance please use `connect`
- * the dispatch function will be attached to the instance. 
- * Use this.dispath as you like it
+ * the dispatch function will be attached to instance. 
  */
-connectInstance(mapStateToData,mapDispatchToMethod)(component)
+connectInstance(mapStateToData,mapDispatchToMethod)(instance)
+
+// Connect state to a subclass instead of instance please use `connect`
+connect(mapStateToData,mapDispatchToMethod)(Component)
 ```

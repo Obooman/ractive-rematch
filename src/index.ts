@@ -43,8 +43,8 @@ export const connectInstance: ConnectInstanceFunc = (
 export const connet: ConnectFunc = (
   mapStateToData = () => ({}),
   mapDispatchToMethods
-) => ractiveClass => args => {
-  const newInstance = new ractiveClass(args);
+) => ractiveClass => (...args) => {
+  const newInstance = new ractiveClass(...args);
   connectInstance(mapStateToData, mapDispatchToMethods)(newInstance);
   return newInstance;
 };
