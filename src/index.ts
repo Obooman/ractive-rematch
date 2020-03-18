@@ -40,7 +40,7 @@ export const connectInstance: ConnectInstanceFunc = (
   });
 };
 
-export const connet: ConnectFunc = (
+export const connect: ConnectFunc = (
   mapStateToData = () => ({}),
   mapDispatchToMethods
 ) => ractiveClass => (...args) => {
