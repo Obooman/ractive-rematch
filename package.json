@@ -1,6 +1,6 @@
 {
   "name": "ractive-rematch",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "esm/index.js",
   "repository": "https://github.com/Obooman/ractive-rematch.git",
   "author": "Oboo Chin <oboochin@gmail.com>",
