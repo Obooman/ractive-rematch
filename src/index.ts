@@ -38,6 +38,8 @@ export const connectInstance: ConnectInstanceFunc = (
 
     ractiveInstance.set(data);
   });
+
+  return ractiveInstance;
 };
 
 export const connect: ConnectFunc = (

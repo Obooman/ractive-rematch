@@ -27,6 +27,7 @@
     "@types/node": "^13.9.3",
     "babel-jest": "^25.1.0",
     "jest": "^25.1.0",
+    "jest-html-reporter": "^2.8.2",
     "rollup": "^2.0.6",
     "rollup-plugin-peer-deps-external": "^2.2.2",
     "rollup-plugin-terser": "^5.2.0",

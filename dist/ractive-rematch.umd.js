@@ -51,6 +51,7 @@
                 var data = mapStateToData(store.getState());
                 ractiveInstance.set(data);
             });
+            return ractiveInstance;
         };
     };
     var connect = function (mapStateToData, mapDispatchToMethods) {
