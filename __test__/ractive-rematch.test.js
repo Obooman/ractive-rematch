@@ -21,7 +21,7 @@ describe("Init rematch value", function() {
   });
 });
 
-describe("Instance connection", function() {
+describe("Instance Connection", function() {
   const store = init({ models: { test } });
   const element = document.createElement("div");
   bindStore(store);
@@ -62,7 +62,7 @@ describe("Instance connection", function() {
   });
 });
 
-describe("class connection", function() {
+describe("Class Connection", function() {
   const store = init({ models: { test } });
   bindStore(store);
 
@@ -100,145 +100,316 @@ describe("class connection", function() {
   });
 });
 
-describe("Passing arguments", function() {
-  const createInstanceConfig = () => {
-    const element = document.createElement("div");
-    return {
-      el: element,
-      instance: Ractive({ template: "<div>{{string}}</div>" })
-    };
-  };
+describe("Connect Instance Passing Arguments", function() {
+  const instance = () =>
+    Ractive({
+      el: document.createElement("div"),
+      template: "<div>{{string}}</div>"
+    });
 
   it("should ok with no arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance()(instance);
+    connectInstance()(instance());
   });
   it("should ok with object as first arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance({})(instance);
-    connectInstance([])(instance);
-    connectInstance(new Date())(instance);
+    connectInstance({})(instance());
+    connectInstance([])(instance());
+    connectInstance(new Date())(instance());
   });
   it("should ok with number as first arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance(0)(instance);
-    connectInstance(-1)(instance);
-    connectInstance(1)(instance);
-    connectInstance(Infinity)(instance);
-    connectInstance(-Infinity)(instance);
-    connectInstance(Math.PI)(instance);
+    connectInstance(0)(instance());
+    connectInstance(-1)(instance());
+    connectInstance(1)(instance());
+    connectInstance(Infinity)(instance());
+    connectInstance(-Infinity)(instance());
+    connectInstance(Math.PI)(instance());
   });
   it("should ok with boolean as first arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance(false)(instance);
-    connectInstance(true)(instance);
+    connectInstance(false)(instance());
+    connectInstance(true)(instance());
   });
   it("should ok with null as first arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance(null)(instance);
+    connectInstance(null)(instance());
   });
   it("should ok with string as first arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance("")(instance);
-    connectInstance("string")(instance);
+    connectInstance("")(instance());
+    connectInstance("string")(instance());
   });
-  it("should ok with function<void> as first arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance(function() {})(instance);
+  it("should ok with function -> void as first arguments ", function() {
+    connectInstance(function() {})(instance());
   });
-  it("should ok with function<string> as first arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance(() => "")(instance);
+  it("should ok with function -> string as first arguments ", function() {
+    connectInstance(() => "")(instance());
   });
-  it("should ok with function<boolean> as first arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance(() => true)(instance);
+  it("should ok with function -> boolean as first arguments ", function() {
+    connectInstance(() => true)(instance());
   });
-  it("should ok with function<null> as first arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance(() => null)(instance);
+  it("should ok with function -> null as first arguments ", function() {
+    connectInstance(() => null)(instance());
   });
-  it("should ok with function<number> as first arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance(() => 0)(instance);
-    connectInstance(() => -1)(instance);
-    connectInstance(() => 1)(instance);
-    connectInstance(() => Infinity)(instance);
-    connectInstance(() => -Infinity)(instance);
-    connectInstance(() => Math.PI)(instance);
+  it("should ok with function -> number as first arguments ", function() {
+    connectInstance(() => 0)(instance());
+    connectInstance(() => -1)(instance());
+    connectInstance(() => 1)(instance());
+    connectInstance(() => Infinity)(instance());
+    connectInstance(() => -Infinity)(instance());
+    connectInstance(() => Math.PI)(instance());
   });
-  it("should ok with function<array> as first arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance(() => [])(instance);
+  it("should ok with function -> array as first arguments ", function() {
+    connectInstance(() => [])(instance());
   });
   it("should ok with null as second arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance(() => {}, null)(instance);
+    connectInstance(() => {}, null)(instance());
   });
   it("should ok with string as second arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance(() => {}, "")(instance);
+    connectInstance(() => {}, "")(instance());
+  });
+  it("should ok with number as second arguments ", function() {
+    connectInstance(() => {}, 0)(instance());
+    connectInstance(() => {}, 1)(instance());
+    connectInstance(() => {}, -1)(instance());
+    connectInstance(() => {}, Infinity)(instance());
+    connectInstance(() => {}, -Infinity)(instance());
+    connectInstance(() => {}, Math.PI)(instance());
   });
   it("should ok with boolean as second arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance(() => {}, true)(instance);
-    connectInstance(() => {}, false)(instance);
+    connectInstance(() => {}, true)(instance());
+    connectInstance(() => {}, false)(instance());
   });
   it("should ok with object as second arguments ", function() {
-    const instance = Ractive(createInstanceConfig());
-    connectInstance(() => {}, {})(instance);
-    connectInstance(() => {}, [])(instance);
-    connectInstance(() => {}, new Date())(instance);
+    connectInstance(() => {}, {})(instance());
+    connectInstance(() => {}, [])(instance());
+    connectInstance(() => {}, new Date())(instance());
+  });
+  it("should ok with undefined as second arguments ", function() {
+    const nextStr = "nextStr";
+    connectInstance(() => {}, undefined)(instance());
+  });
+  it("should ok with function -> void as second arguments ", function() {
+    connectInstance(
+      () => {},
+      () => {}
+    )(instance());
+  });
+  it("should ok with function -> string as second arguments ", function() {
+    connectInstance(
+      () => {},
+      () => "string"
+    )(instance());
+  });
+  it("should ok with function -> boolean as second arguments ", function() {
+    connectInstance(
+      () => {},
+      () => true
+    )(instance());
+    connectInstance(
+      () => {},
+      () => false
+    )(instance());
+  });
+  it("should ok with function -> null as second arguments ", function() {
+    connectInstance(
+      () => {},
+      () => null
+    )(instance());
+  });
+  it("should ok with function -> number as second arguments ", function() {
+    connectInstance(
+      () => {},
+      () => 0
+    )(instance());
+    connectInstance(
+      () => {},
+      () => 1
+    )(instance());
+    connectInstance(
+      () => {},
+      () => -1
+    )(instance());
+    connectInstance(
+      () => {},
+      () => Infinity
+    )(instance());
+    connectInstance(
+      () => {},
+      () => -Infinity
+    )(instance());
+    connectInstance(
+      () => {},
+      () => Math.PI
+    )(instance());
+  });
+  it("should ok with function -> array as second arguments ", function() {
+    connectInstance(
+      () => {},
+      () => []
+    )(instance());
+  });
+  it("should ok with function -> empty object as second arguments ", function() {
+    connectInstance(
+      () => {},
+      () => ({})
+    )(instance());
+  });
+  it("should ok with function -> object as second arguments ", function() {
+    const nextStr = "nextStr";
+    connectInstance(
+      () => {},
+      () => ({
+        someMethod: () => {}
+      })
+    )(instance());
+  });
+
+  it("should ok with function -> array as second arguments ", function() {
+    connectInstance(
+      () => {},
+      () => []
+    )(instance());
   });
 });
 
-describe("class connect passing arguments", function() {
+describe("Class Connect Passing Arguments", function() {
   const createClass = () =>
     Ractive.extend({ template: "<div>{{string}}</div>" });
 
-  it("test", function() {
-    expect(1).toBe(1);
-  });
-
   it("class should ok with no arguments ", function() {
-    const ractiveClass = createClass();
-    connect()(ractiveClass);
-    ractiveClass();
+    connect()(createClass())();
   });
-  it("class should ok with function<void> as first arguments ", function() {
-    const ractiveClass = createClass();
-    connect(() => {})(ractiveClass);
-    ractiveClass();
+  it("class should ok with number as first arguments ", function() {
+    connect(0)(createClass())();
+    connect(1)(createClass())();
+    connect(-1)(createClass())();
+    connect(Infinity)(createClass())();
+    connect(-Infinity)(createClass())();
+    connect(Math.PI)(createClass())();
   });
-  it("class should ok with function<string> as second arguments ", function() {
-    const ractiveClass = createClass();
-    connect(() => "")(ractiveClass);
-    ractiveClass();
+  it("class should ok with string as first arguments ", function() {
+    connect("")(createClass())();
   });
-  it("class should ok with function<boolean> as second arguments ", function() {
-    const ractiveClass = createClass();
-    connect(() => true)(ractiveClass);
-    connect(() => false)(ractiveClass);
-    ractiveClass();
+  it("class should ok with boolean as first arguments ", function() {
+    connect(true)(createClass())();
+    connect(false)(createClass())();
   });
-  it("class should ok with function<null> as second arguments ", function() {
-    const ractiveClass = createClass();
-    connect(() => null)(ractiveClass);
-    ractiveClass();
+  it("class should ok with null as first arguments ", function() {
+    connect(null)(createClass())();
   });
-  it("class should ok with function<number> as second arguments ", function() {
-    const ractiveClass = createClass();
-    connect(() => 0)(ractiveClass);
-    ractiveClass();
-    connect(() => 1)(ractiveClass);
-    ractiveClass();
-    connect(() => -1)(ractiveClass);
-    ractiveClass();
-    connect(() => Infinity)(ractiveClass);
-    ractiveClass();
-    connect(() => -Infinity)(ractiveClass);
-    ractiveClass();
-    connect(() => Math.PI)(ractiveClass);
-    ractiveClass();
+  it("class should ok with object as first arguments ", function() {
+    connect({})(createClass())();
+  });
+  it("class should ok with function -> void as first arguments ", function() {
+    connect(() => {})(createClass())();
+  });
+  it("class should ok with function -> string as second arguments ", function() {
+    connect(() => "")(createClass())();
+  });
+  it("class should ok with function -> boolean as second arguments ", function() {
+    connect(() => true)(createClass())();
+    connect(() => false)(createClass())();
+  });
+  it("class should ok with function -> null as second arguments ", function() {
+    connect(() => null)(createClass())();
+  });
+  it("class should ok with function -> number as second arguments ", function() {
+    connect(() => 0)(createClass())();
+    connect(() => 1)(createClass())();
+    connect(() => -1)(createClass())();
+    connect(() => Infinity)(createClass())();
+    connect(() => -Infinity)(createClass())();
+    connect(() => Math.PI)(createClass())();
+  });
+  it("class should ok with no second arguments ", function() {
+    connect(() => {})(createClass())();
+  });
+  it("class should ok with number as second arguments ", function() {
+    connect(() => {}, 0)(createClass())();
+    connect(() => {}, 1)(createClass())();
+    connect(() => {}, -1)(createClass())();
+    connect(() => {}, Infinity)(createClass())();
+    connect(() => {}, -Infinity)(createClass())();
+    connect(() => {}, Math.PI)(createClass())();
+  });
+  it("class should ok with string as second arguments ", function() {
+    connect(() => {}, "")(createClass())();
+  });
+  it("class should ok with boolean as second arguments ", function() {
+    connect(() => {}, true)(createClass())();
+    connect(() => {}, false)(createClass())();
+  });
+  it("class should ok with object as second arguments ", function() {
+    connect(() => {}, {})(createClass())();
+  });
+  it("class should ok with function -> void as second arguments ", function() {
+    connect(
+      () => {},
+      () => {}
+    )(createClass())();
+  });
+  it("class should ok with function -> number as second arguments ", function() {
+    connect(
+      () => {},
+      () => 0
+    )(createClass())();
+    connect(
+      () => {},
+      () => 1
+    )(createClass())();
+    connect(
+      () => {},
+      () => -1
+    )(createClass())();
+    connect(
+      () => {},
+      () => Infinity
+    )(createClass())();
+    connect(
+      () => {},
+      () => -Infinity
+    )(createClass())();
+    connect(
+      () => {},
+      () => Math.PI
+    )(createClass())();
+  });
+  it("class should ok with function -> string as second arguments ", function() {
+    connect(
+      () => {},
+      () => ""
+    )(createClass())();
+  });
+  it("class should ok with function -> array as second arguments ", function() {
+    connect(
+      () => {},
+      () => []
+    )(createClass())();
+  });
+  it("class should ok with function -> boolean as second arguments ", function() {
+    connect(
+      () => {},
+      () => true
+    )(createClass())();
+    connect(
+      () => {},
+      () => false
+    )(createClass())();
+  });
+  it("class should ok with function -> null as second arguments ", function() {
+    connect(
+      () => {},
+      () => null
+    )(createClass())();
+  });
+  it("class should ok with function -> empty object as second arguments ", function() {
+    connect(
+      () => {},
+      () => ({})
+    )(createClass())();
+  });
+  it("class should ok with function -> object as second arguments ", function() {
+    connect(
+      () => {},
+      () => ({
+        method: () => {}
+      })
+    )(createClass())();
   });
 });

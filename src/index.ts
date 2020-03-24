@@ -16,21 +16,37 @@ const freezeObjectField: FreezeObjectFunc = (obj, property) => {
 
 export const connectInstance: ConnectInstanceFunc = (
   mapStateToData = () => ({}),
-  mapDispatchToMethods
+  ...args
 ) => ractiveInstance => {
+  let mapDispatchToMethods;
+  if (typeof mapStateToData !== "function") {
+    mapStateToData = () => {};
+  }
+
   const initialState = mapStateToData(store.getState());
 
-  ractiveInstance.set(initialState);
+  if (
+    initialState &&
+    typeof initialState === "object" &&
+    !(initialState instanceof Array)
+  ) {
+    ractiveInstance.set(initialState);
+  }
 
-  ractiveInstance["dispatch"] = store.dispatch;
-  freezeObjectField(ractiveInstance, "dispatch");
+  if (args.length > 0) {
+    ractiveInstance["dispatch"] = store.dispatch;
+    freezeObjectField(ractiveInstance, "dispatch");
+    mapDispatchToMethods = args[0];
+  }
 
   if (mapDispatchToMethods && typeof mapDispatchToMethods === "function") {
     const methods = mapDispatchToMethods(store.dispatch);
 
-    Object.keys(methods).forEach(method => {
-      ractiveInstance[method] = methods[method];
-    });
+    if (methods && typeof methods === "object" && !(methods instanceof Array)) {
+      Object.keys(methods).forEach(method => {
+        ractiveInstance[method] = methods[method];
+      });
+    }
   }
 
   store.subscribe(function() {
