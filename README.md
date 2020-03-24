@@ -47,8 +47,8 @@ const mapDispatchToMethod = dispatch => ({
 /* 
  * the dispatch function will be attached to instance. 
  */
-connectInstance(mapStateToData,mapDispatchToMethod)(instance)
+export const connectedInstance = connectInstance(mapStateToData,mapDispatchToMethod)(instance)
 
 // Connect state to a subclass instead of instance please use `connect`
-connect(mapStateToData,mapDispatchToMethod)(Component)
+export const connectedComponent = connect(mapStateToData,mapDispatchToMethod)(Component)
 ```
