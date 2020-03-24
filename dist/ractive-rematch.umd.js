@@ -34,18 +34,35 @@
             writable: false
         });
     };
-    var connectInstance = function (mapStateToData, mapDispatchToMethods) {
+    var connectInstance = function (mapStateToData) {
         if (mapStateToData === void 0) { mapStateToData = function () { return ({}); }; }
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
         return function (ractiveInstance) {
+            var mapDispatchToMethods;
+            if (typeof mapStateToData !== "function") {
+                mapStateToData = function () { };
+            }
             var initialState = mapStateToData(store.getState());
-            ractiveInstance.set(initialState);
-            ractiveInstance["dispatch"] = store.dispatch;
-            freezeObjectField(ractiveInstance, "dispatch");
+            if (initialState &&
+                typeof initialState === "object" &&
+                !(initialState instanceof Array)) {
+                ractiveInstance.set(initialState);
+            }
+            if (args.length > 0) {
+                ractiveInstance["dispatch"] = store.dispatch;
+                freezeObjectField(ractiveInstance, "dispatch");
+                mapDispatchToMethods = args[0];
+            }
             if (mapDispatchToMethods && typeof mapDispatchToMethods === "function") {
                 var methods_1 = mapDispatchToMethods(store.dispatch);
-                Object.keys(methods_1).forEach(function (method) {
-                    ractiveInstance[method] = methods_1[method];
-                });
+                if (methods_1 && typeof methods_1 === "object" && !(methods_1 instanceof Array)) {
+                    Object.keys(methods_1).forEach(function (method) {
+                        ractiveInstance[method] = methods_1[method];
+                    });
+                }
             }
             store.subscribe(function () {
                 var data = mapStateToData(store.getState());
