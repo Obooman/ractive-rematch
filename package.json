@@ -11,6 +11,12 @@
     "ractivejs",
     "rematch"
   ],
+  "files": [
+    "./src/*",
+    "./typing/*",
+    "./dist/*",
+    "./esm/*"
+  ],
   "scripts": {
     "test": "jest __test__",
     "build": "rollup -c rollup.config.js"
