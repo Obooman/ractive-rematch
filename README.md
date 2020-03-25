@@ -1,7 +1,6 @@
-# ractive-rematch
+# ractive-rematch ![CI Test & Build Badge](https://github.com/obooman/ractive-rematch/workflows/Build/badge.svg)
 
-![CI Test & Build Badge](https://github.com/obooman/ractive-rematch/workflows/Build/badge.svg)
-redux connector for ractivejs application, with rematch as redux api provider.
+Redux connector for ractivejs application, with rematch as redux api provider.
 
 # Get Started
 
